@@ -1,33 +1,47 @@
 import org.spongepowered.gradle.plugin.config.PluginLoaders
 import org.spongepowered.plugin.metadata.model.PluginDependency
 
+var spongeAPIVersion = "8.1.0"
+if (project.hasProperty("spongeAPI")) {
+    spongeAPIVersion = project.property("spongeAPI").toString();
+}
+var javaVersion = JavaVersion.VERSION_1_8
+if (project.hasProperty("compileVersion")) {
+    javaVersion = JavaVersion.toVersion(project.property("compileVersion"))
+}
+
 plugins {
     `java-library`
     id("org.spongepowered.gradle.plugin") version "2.1.1"
 }
 
 group = "org"
-version = "1.0-SNAPSHOT"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io")
+
+}
+
+dependencies {
+    api(project(":API"))
+    api("com.github.mosemister:DataProperties:master-SNAPSHOT")
 }
 
 sponge {
     apiVersion("8.1.0")
-    license("GPL-3.0")
+    license("MIT")
     loader {
         name(PluginLoaders.JAVA_PLAIN)
         version("1.0")
     }
     plugin("essentials-s") {
         displayName("essentials-s")
-        entrypoint("org.essentialss.Essentials_s")
-        description("My plugin description")
+        entrypoint("org.essentialss.EssentialSMain")
+        description("A stop shop for all essentials commands")
         links {
-            // homepage("https://spongepowered.org")
-            // source("https://spongepowered.org/source")
-            // issues("https://spongepowered.org/issues")
+            homepage("https://ore.spongepowered.org/MoseMister/Essentials-S")
         }
         dependency("spongeapi") {
             loadOrder(PluginDependency.LoadOrder.AFTER)
@@ -36,21 +50,14 @@ sponge {
     }
 }
 
-val javaTarget = 8 // Sponge targets a minimum of Java 8
 java {
-    sourceCompatibility = JavaVersion.toVersion(javaTarget)
-    targetCompatibility = JavaVersion.toVersion(javaTarget)
-    if (JavaVersion.current() < JavaVersion.toVersion(javaTarget)) {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(javaTarget))
-    }
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 }
 
 tasks.withType(JavaCompile::class).configureEach {
     options.apply {
-        encoding = "utf-8" // Consistent source file encoding
-        if (JavaVersion.current().isJava10Compatible) {
-            release.set(javaTarget)
-        }
+        encoding = "utf-8"
     }
 }
 

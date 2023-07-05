@@ -1,0 +1,28 @@
+{
+  "loader": {
+    "name": "java_plain",
+    "version": "1.0"
+  },
+  "license": "MIT",
+  "plugins": [
+    {
+      "id": "essentials-s",
+      "entrypoint": "org.essentialss.EssentialSMain",
+      "name": "essentials-s",
+      "description": "A stop shop for all essentials commands",
+      "version": "0.1.0",
+      "branding": {},
+      "links": {
+        "homepage": "https://ore.spongepowered.org/MoseMister/Essentials-S"
+      },
+      "dependencies": [
+        {
+          "id": "spongeapi",
+          "version": "8.1.0",
+          "load-order": "after",
+          "optional": false
+        }
+      ]
+    }
+  ]
+}

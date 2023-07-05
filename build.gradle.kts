@@ -18,6 +18,12 @@ plugins {
 group = "org"
 version = "0.1.0"
 
+tasks {
+    test {
+        useJUnitPlatform()
+    }
+}
+
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
@@ -27,6 +33,9 @@ repositories {
 dependencies {
     api(project(":API"))
     api("com.github.mosemister:DataProperties:master-SNAPSHOT")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
 sponge {

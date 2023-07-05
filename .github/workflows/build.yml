@@ -44,5 +44,5 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
-      - name: Build with Maven
-        run: gradle package -P spongeAPI=9.0.0
+      - name: Build with Gradle
+        run: gradlew build -P spongeAPI=9.0.0 -P compileVersion=17

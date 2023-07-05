@@ -10,6 +10,8 @@ if (project.hasProperty("compileVersion")) {
     javaVersion = JavaVersion.toVersion(project.property("compileVersion"))
 }
 
+System.out.println("Parameters: JavaVersion = " + javaVersion + " - SpongeAPI = " + spongeAPIVersion)
+
 plugins {
     `java-library`
     id("org.spongepowered.gradle.plugin") version "2.1.1"
@@ -27,7 +29,6 @@ tasks {
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
-
 }
 
 dependencies {
@@ -39,7 +40,7 @@ dependencies {
 }
 
 sponge {
-    apiVersion("8.1.0")
+    apiVersion(spongeAPIVersion)
     license("MIT")
     loader {
         name(PluginLoaders.JAVA_PLAIN)

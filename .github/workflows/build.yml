@@ -44,5 +44,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       - name: Build with Gradle
         run: ./gradlew build -P spongeAPI=9.0.0 -P compileVersion=17

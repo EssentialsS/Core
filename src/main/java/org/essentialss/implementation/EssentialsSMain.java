@@ -53,7 +53,6 @@ import org.essentialss.implementation.group.GroupManagerImpl;
 import org.essentialss.implementation.kit.KitManagerImpl;
 import org.essentialss.implementation.listeners.afk.AwayFromKeyboardListeners;
 import org.essentialss.implementation.listeners.ban.BanConnectionListeners;
-import org.essentialss.implementation.listeners.chat.ChatListener;
 import org.essentialss.implementation.listeners.chat.MuteListener;
 import org.essentialss.implementation.listeners.chat.SpyListener;
 import org.essentialss.implementation.listeners.chat.VanillaMessageListener;
@@ -62,11 +61,13 @@ import org.essentialss.implementation.listeners.data.DataListeners;
 import org.essentialss.implementation.listeners.data.GodListeners;
 import org.essentialss.implementation.messages.SMessageManagerImpl;
 import org.essentialss.implementation.misc.OrElse;
+import org.essentialss.implementation.module.EssentialsSModules;
 import org.essentialss.implementation.player.SPlayerManagerImpl;
 import org.essentialss.implementation.schedules.AwayFromKeyboardCheckScheduler;
 import org.essentialss.implementation.schedules.CooldownScheduler;
 import org.essentialss.implementation.schedules.UpdateCheck;
 import org.essentialss.implementation.world.SWorldManagerImpl;
+import org.essentialss.module.chat.ChatListener;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
@@ -246,6 +247,9 @@ public class EssentialsSMain implements EssentialsSAPI {
         //god
         event.register(this.container, GodModeCommand.createGodModeCommand(), "god");
         event.register(this.container, GodModeCommand.createDemiGodModeCommand(), "demigod");
+
+        //modules
+        EssentialsSModules.LEGACY_CHAT_FORMATTING.get().ifPresent(module -> module.boot(this.container));
 
     }
 

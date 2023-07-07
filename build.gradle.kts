@@ -17,12 +17,33 @@ plugins {
     id("org.spongepowered.gradle.plugin") version "2.1.1"
 }
 
-group = "org"
+group = "org.essentialss"
 version = "0.1.0"
 
 tasks {
     test {
         useJUnitPlatform()
+    }
+
+    jar {
+        dependsOn(":API:build")
+        archiveFileName.set("Essentials-S.jar")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        val collected = configurations.runtimeClasspath.get()
+                .filter {
+                    if (it.name.startsWith("API-")) {
+                        return@filter true
+                    }
+                    if (it.name.startsWith("DataProperties-")) {
+                        return@filter true
+                    }
+                    return@filter false
+                }
+                .map {
+                    return@map zipTree(it)
+                }
+
+        from(collected)
     }
 }
 
@@ -33,6 +54,7 @@ repositories {
 
 dependencies {
     api(project(":API"))
+    api(project(":LegacyChatFormattingModule"))
     api("com.github.mosemister:DataProperties:master-SNAPSHOT")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")

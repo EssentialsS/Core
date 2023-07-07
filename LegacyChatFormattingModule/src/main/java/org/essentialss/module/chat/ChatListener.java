@@ -1,8 +1,8 @@
-package org.essentialss.implementation.listeners.chat;
+package org.essentialss.module.chat;
 
 import net.kyori.adventure.text.Component;
-import org.essentialss.implementation.EssentialsSMain;
 import org.essentialss.api.message.adapters.player.listener.chat.ChatMessageAdapter;
+import org.essentialss.implementation.EssentialsSMain;
 import org.spongepowered.api.entity.living.player.PlayerChatFormatter;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
@@ -10,8 +10,6 @@ import org.spongepowered.api.event.message.PlayerChatEvent;
 
 import java.util.Optional;
 
-//Will be moving to it's own module as it is not supported in API 10+
-@Deprecated
 public class ChatListener {
 
     @Listener(order = Order.LAST)

@@ -27,6 +27,7 @@ tasks {
 
     jar {
         dependsOn(":API:build")
+        //dependsOn(":LegacyChatFormatingModule:build");
         archiveFileName.set("Essentials-S.jar")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         val collected = configurations.runtimeClasspath.get()
@@ -54,7 +55,6 @@ repositories {
 
 dependencies {
     api(project(":API"))
-    api(project(":LegacyChatFormattingModule"))
     api("com.github.mosemister:DataProperties:master-SNAPSHOT")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")

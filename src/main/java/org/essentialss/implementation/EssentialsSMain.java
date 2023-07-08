@@ -60,14 +60,12 @@ import org.essentialss.implementation.listeners.connection.ConnectionListeners;
 import org.essentialss.implementation.listeners.data.DataListeners;
 import org.essentialss.implementation.listeners.data.GodListeners;
 import org.essentialss.implementation.messages.SMessageManagerImpl;
-import org.essentialss.implementation.misc.OrElse;
 import org.essentialss.implementation.module.EssentialsSModules;
 import org.essentialss.implementation.player.SPlayerManagerImpl;
 import org.essentialss.implementation.schedules.AwayFromKeyboardCheckScheduler;
 import org.essentialss.implementation.schedules.CooldownScheduler;
 import org.essentialss.implementation.schedules.UpdateCheck;
 import org.essentialss.implementation.world.SWorldManagerImpl;
-import org.essentialss.module.chat.ChatListener;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
@@ -81,6 +79,7 @@ import org.spongepowered.api.scheduler.Scheduler;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.LinkedTransferQueue;
@@ -249,7 +248,17 @@ public class EssentialsSMain implements EssentialsSAPI {
         event.register(this.container, GodModeCommand.createDemiGodModeCommand(), "demigod");
 
         //modules
-        EssentialsSModules.LEGACY_CHAT_FORMATTING.get().ifPresent(module -> module.boot(this.container));
+        EssentialsSModules.LEGACY_CHAT_FORMATTING.get().ifPresent(module -> {
+                                                                      try {
+                                                                          module.getClass().getDeclaredMethod("boot", PluginContainer.class).invoke(module,
+                                                                                                                                                    this.container);
+                                                                      } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                                                                          throw new RuntimeException(e);
+                                                                      }
+                                                                  }
+
+
+        );
 
     }
 
@@ -286,13 +295,6 @@ public class EssentialsSMain implements EssentialsSAPI {
         eventManager.registerListeners(this.container, new DataListeners());
         eventManager.registerListeners(this.container, new VanillaMessageListener());
         eventManager.registerListeners(this.container, new GodListeners());
-
-        if (OrElse.ifTry(Exception.class, () -> {
-            Class.forName("org.spongepowered.api.event.message.PlayerChatEvent");
-            return true;
-        }, () -> false)) {
-            eventManager.registerListeners(this.container, new ChatListener());
-        }
     }
 
     public static EssentialsSMain plugin() {

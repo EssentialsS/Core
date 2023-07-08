@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.EssentialsS:Core:master-SNAPSHOT")
+    implementation(project(":"))
     implementation("org.spongepowered:spongeapi:8.0.0")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")

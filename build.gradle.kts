@@ -14,6 +14,7 @@ System.out.println("Parameters: JavaVersion = " + javaVersion + " - SpongeAPI = 
 
 plugins {
     `java-library`
+    `maven-publish`
     id("org.spongepowered.gradle.plugin") version "2.1.1"
 }
 

@@ -20,6 +20,7 @@ plugins {
 group = "org.essentialss"
 version = "0.1.0"
 
+
 tasks {
     test {
         useJUnitPlatform()
@@ -27,6 +28,9 @@ tasks {
 
     register("install") {
         dependsOn("build")
+        val coreFile = file("./build/libs/Essentials-S.jar");
+        val pathTo = file("${System.getProperty("user.home")}/.m2/repository/org/essentialss/Core/1.0-SNAPSHOT");
+        coreFile.copyTo(pathTo, true)
     }
 
     jar {

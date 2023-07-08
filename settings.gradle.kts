@@ -1,3 +1,3 @@
-rootProject.name = "Essentials-S"
+rootProject.name = "Core"
 include("API")
 include("LegacyChatFormattingModule")

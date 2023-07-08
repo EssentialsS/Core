@@ -25,6 +25,10 @@ tasks {
         useJUnitPlatform()
     }
 
+    register("install") {
+        dependsOn("build")
+    }
+
     jar {
         dependsOn(":API:build")
         //dependsOn(":LegacyChatFormatingModule:build");

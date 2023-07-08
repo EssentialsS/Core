@@ -21,7 +21,6 @@ plugins {
 group = "org.essentialss"
 version = "0.1.0"
 
-
 tasks {
     test {
         useJUnitPlatform()
